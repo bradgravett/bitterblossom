@@ -1,0 +1,45 @@
+<!-- MTG Token Spawner — Object UI (paginated, no scrollview)
+
+     Rows are absolutely-positioned buttons injected by the Lua side as
+     direct children of #tokenPanel — the placement proven to render.
+     No VerticalScrollView, no layout group, no #rowsContent. PAGE_SIZE
+     rows show at once; prev/next page through the filtered list.
+
+     ROW_Y0 / ROW_STEP in the Lua control vertical placement. If rows
+     overlap the header or spill past the panel, tune those, not this.
+
+     Position/rotation/scale below are Brad's tuned values. -->
+
+<Button id="toggleBtn" onClick="onTogglePanel"
+        position="0 0 10" rotation="180 0 180" scale="1 1 1"
+        width="170" height="60" fontSize="28"
+        color="#333344" textColor="#ffffbb">Tokens</Button>
+
+<Panel id="tokenPanel" active="false"
+       position="0 -380 -5" rotation="180 0 180" scale="1 1 1"
+       width="350" height="540" color="#1b1b1bF2">
+
+  <InputField id="searchInput"
+              onValueChanged="onSearchInput"
+              rectAlignment="UpperCenter" offsetXY="0 -10"
+              width="330" height="36" fontSize="14"
+              placeholder="Search tokens…" />
+
+  <Text id="status"
+        rectAlignment="UpperCenter" offsetXY="0 -50"
+        width="330" height="20" fontSize="12"
+        color="#bbbbbb" alignment="MiddleLeft">Loading…</Text>
+
+  <!-- Row buttons (row1..rowN) injected here at runtime. -->
+
+  <!-- Pager, pinned to the bottom edge of the panel. -->
+  <Button id="prevBtn" onClick="onPrevPage"
+          rectAlignment="LowerLeft" offsetXY="12 12"
+          width="150" height="34" fontSize="16"
+          color="#333344" textColor="#ffffff">◄ Prev</Button>
+  <Button id="nextBtn" onClick="onNextPage"
+          rectAlignment="LowerRight" offsetXY="-12 12"
+          width="150" height="34" fontSize="16"
+          color="#333344" textColor="#ffffff">Next ►</Button>
+
+</Panel>
