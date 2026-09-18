@@ -3,13 +3,76 @@
 
 ------------------------------------------------------------------- state --
 
-local filtered  = {}
-local page      = 0
-local uiReady   = false
+local filtered    = {}
+local page        = 0
+local uiReady     = false
 local injectTries = 0
-local panelOpen = false
+local panelOpen   = false
+
+local currentText = ""      -- live search box text
+local activeCat   = "all"   -- active category filter
+
+-- Quick-spawn buttons: button id -> exact card name to spawn.
+local QUICK = {
+  qs_treasure = "Treasure",
+  qs_monarch  = "The Monarch",
+  qs_clue     = "Clue",
+  qs_food     = "Food",
+  qs_map      = "Map",
+  qs_blood    = "Blood",
+}
+
+-- Quick-spawn button icons, registered as custom UI assets at load.
+-- Asset name -> image URL. Referenced by name from the <Image> overlays
+-- in TokenSpawner.xml. Swap URLs here to change the icons.
+local QUICK_ICONS = {
+  { name = "ic_treasure", url = "https://steamusercontent-a.akamaihd.net/ugc/17018773522266152255/223000D86A0C8397FE121FDF7B23FE8FDBE6CCFD/" },
+  { name = "ic_monarch",  url = "https://steamusercontent-a.akamaihd.net/ugc/12072374502928477656/40D67528C15F8CEDA2740D5AF8D4AD4E1F7CCAC9/" },
+  { name = "ic_clue",     url = "https://steamusercontent-a.akamaihd.net/ugc/9327800001146064758/BAD80FD4224F0FB0A8A574F640E27ABCA8A00BA4/" },
+  { name = "ic_food",     url = "https://steamusercontent-a.akamaihd.net/ugc/15154958424979900996/7672A745E52A8E6A016A1C6211EF4ED13D3BE2E4/" },
+  { name = "ic_map",      url = "https://steamusercontent-a.akamaihd.net/ugc/14370504716232549440/85E15878018C244C58224DA72171D61AF98C5AAE/" },
+  { name = "ic_blood",    url = "https://steamusercontent-a.akamaihd.net/ugc/15724273169658124758/9B5735256468328FC44AC01F064871C955E42FA8/" },
+}
+
+-- Register the icons as UI custom assets. Assets may live on the object UI
+-- or the global UI depending on the TTS version, so apply to both (guarded);
+-- merge by name so reloads don't duplicate entries.
+local function registerIcons()
+  local function apply(ui)
+    if not ui or not ui.setCustomAssets then return end
+    local assets = (ui.getCustomAssets and ui.getCustomAssets()) or {}
+    local byName = {}
+    for _, a in ipairs(assets) do byName[a.name] = a end
+    for _, a in ipairs(QUICK_ICONS) do byName[a.name] = a end
+    local merged = {}
+    for _, a in pairs(byName) do merged[#merged + 1] = a end
+    pcall(function() ui.setCustomAssets(merged) end)
+  end
+  apply(self.UI)
+  apply(UI)
+end
+
+-- Category filter buttons: button id -> category tag (see buildIndex).
+local FILTER_IDS = { "flt_all", "flt_tokens", "flt_emblems",
+                     "flt_dungeon", "flt_helper" }
+local FILTER_CAT = {
+  flt_all     = "all",
+  flt_tokens  = "tokens",
+  flt_emblems = "emblems",
+  flt_dungeon = "dungeon",
+  flt_helper  = "helper",
+}
 
 ----------------------------------------------------------------- helpers --
+
+-- Category from the type line, priority Emblem > Dungeon > Token > Helper.
+local function categoryOf(typeLine)
+  local tl = typeLine or ""
+  if tl:find("Emblem") then return "emblems" end
+  if tl:find("Dungeon") then return "dungeon" end
+  if tl:find("Token") then return "tokens" end
+  return "helper"
+end
 
 local function buildIndex()
   for _, t in ipairs(TOKENS) do
@@ -19,6 +82,7 @@ local function buildIndex()
     }, " "))
     -- Display type line without the leading "Token ".
     t._types = (t.types or ""):gsub("^Token ", "")
+    t._cat = categoryOf(t.types)
   end
 end
 
@@ -109,12 +173,39 @@ local function spawnToken(t, playerColor)
       playerColor, { 1, 0.4, 0.4 })
     return
   end
+
+  local data = cardJSON(t.name, descFor(t), t.img)
+
+  -- Alternate printings -> selectable object States. State 1 is the default
+  -- face (t.img, original art); each variant URL becomes states 2, 3, ...
+  -- Players switch printings via the state menu / number keys in TTS.
+  if t.variants and #t.variants > 0 then
+    data.States = {}
+    for i, url in ipairs(t.variants) do
+      data.States[tostring(i + 1)] = cardJSON(t.name, descFor(t), url)
+    end
+  end
+
   spawnObjectJSON({
-    json = JSON.encode(cardJSON(t.name, descFor(t), t.img)),
+    json = JSON.encode(data),
     position = spawnPosFor(playerColor),
     rotation = { 0, 180, 0 },
   })
-  broadcastToColor("Spawned " .. t.name, playerColor, { 0.6, 1, 0.6 })
+
+  local n = 1 + (t.variants and #t.variants or 0)
+  local extra = (n > 1) and ("  (" .. n .. " printings)") or ""
+  broadcastToColor("Spawned " .. t.name .. extra, playerColor, { 0.6, 1, 0.6 })
+end
+
+-- Spawn the first token whose card name matches exactly (quick-spawn).
+local function spawnByName(name, playerColor)
+  for _, t in ipairs(TOKENS) do
+    if t.name == name then
+      spawnToken(t, playerColor)
+      return
+    end
+  end
+  broadcastToColor("Not in data: " .. name, playerColor, { 1, 0.4, 0.4 })
 end
 
 ---------------------------------------------------------------------- ui --
@@ -146,7 +237,7 @@ local function renderPage()
   if total == 0 then
     msg = "No matches."
   else
-    msg = total .. " token" .. (total == 1 and "" or "s")
+    msg = total .. " result" .. (total == 1 and "" or "s")
     if pages > 1 then
       msg = msg .. "  ·  page " .. (page + 1) .. "/" .. pages
     end
@@ -154,19 +245,26 @@ local function renderPage()
   self.UI.setValue("status", msg)
 end
 
-local function doSearch(text)
-  text = (text or ""):match("^%s*(.-)%s*$")
-  if text == "" then
-    filtered = TOKENS
-  else
-    filtered = {}
-    local terms = splitTerms(text)
-    for _, t in ipairs(TOKENS) do
-      if matches(t, terms) then filtered[#filtered + 1] = t end
+-- Apply the active category filter AND the current search text together.
+local function applyFilters()
+  local terms = splitTerms(currentText)
+  local hasText = currentText ~= ""
+  filtered = {}
+  for _, t in ipairs(TOKENS) do
+    local catOk = (activeCat == "all") or (t._cat == activeCat)
+    if catOk and (not hasText or matches(t, terms)) then
+      filtered[#filtered + 1] = t
     end
   end
   page = 0
   renderPage()
+end
+
+local function updateFilterButtons()
+  for _, fid in ipairs(FILTER_IDS) do
+    local on = (FILTER_CAT[fid] == activeCat)
+    self.UI.setAttribute(fid, "color", on and "#5B21B6" or "#333344")
+  end
 end
 
 local function findById(nodes, id)
@@ -219,7 +317,8 @@ injectRows = function()
 
   Wait.time(function()
     uiReady = true
-    doSearch("")
+    updateFilterButtons()
+    applyFilters()
   end, 0.3)
 end
 
@@ -232,7 +331,21 @@ end
 
 function onSearchInput(player, value, id)
   if not uiReady then return end
-  doSearch(value)
+  currentText = value or ""
+  applyFilters()
+end
+
+function onFilter(player, mouseButton, id)
+  local cat = FILTER_CAT[id]
+  if not cat then return end
+  activeCat = cat
+  updateFilterButtons()
+  applyFilters()
+end
+
+function onQuickSpawn(player, mouseButton, id)
+  local name = QUICK[id]
+  if name then spawnByName(name, player.color) end
 end
 
 function onPrevPage()
@@ -255,5 +368,6 @@ end
 
 function onLoad()
   buildIndex()
+  registerIcons()
   injectRows()
 end

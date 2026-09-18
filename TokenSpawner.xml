@@ -1,22 +1,25 @@
-<!-- MTG Token Spawner — Object UI (paginated, no scrollview)
+<!-- MTG Token Spawner (Bitterblossom) — Object UI
 
-     Rows are absolutely-positioned buttons injected by the Lua side as
-     direct children of #tokenPanel — the placement proven to render.
-     No VerticalScrollView, no layout group, no #rowsContent. PAGE_SIZE
-     rows show at once; prev/next page through the filtered list.
+     Rows are injected by the Lua side as absolutely-positioned children of
+     #tokenPanel. The filter row, quick-spawn row, and pager are static
+     here. All use symmetric X offsets so a mirrored panel rotation only
+     reverses left-right order (cosmetic), never hides them.
 
-     ROW_Y0 / ROW_STEP in the Lua control vertical placement. If rows
-     overlap the header or spill past the panel, tune those, not this.
+     Layout budget (top-anchored, offsetXY Y grows downward):
+       search  -10   filter -50   quick-spawn -86   status -122
+       rows start at ROW_Y0 (-150 in the Lua), 6 rows, step 44
+       pager pinned to the lower corners
+     If a row overlaps or a label clips, tune these + the Lua ROW_* consts.
 
-     Position/rotation/scale below are Brad's tuned values. -->
+     position/rotation/scale below are Brad's tuned values. -->
 
 <Button id="toggleBtn" onClick="onTogglePanel"
-        position="0 0 10" rotation="180 0 180" scale="1 1 1"
+        position="0 0 -25" rotation="0 0 180" scale="1 1 1"
         width="170" height="60" fontSize="28"
         color="#333344" textColor="#ffffbb">Tokens</Button>
 
 <Panel id="tokenPanel" active="false"
-       position="0 -380 -5" rotation="180 0 180" scale="1 1 1"
+       position="0 380 -15" rotation="0 0 180" scale="1 1 1"
        width="350" height="540" color="#1b1b1bF2">
 
   <InputField id="searchInput"
@@ -25,14 +28,64 @@
               width="330" height="36" fontSize="14"
               placeholder="Search tokens…" />
 
+  <!-- Category filter row (5 buttons). flt_all starts highlighted. -->
+  <Button id="flt_all"     onClick="onFilter" rectAlignment="UpperCenter"
+          offsetXY="-132 -50" width="64" height="30" fontSize="13"
+          color="#5B21B6" textColor="#ffffff">All</Button>
+  <Button id="flt_tokens"  onClick="onFilter" rectAlignment="UpperCenter"
+          offsetXY="-66 -50" width="64" height="30" fontSize="13"
+          color="#333344" textColor="#ffffff">Tokens</Button>
+  <Button id="flt_emblems" onClick="onFilter" rectAlignment="UpperCenter"
+          offsetXY="0 -50" width="64" height="30" fontSize="13"
+          color="#333344" textColor="#ffffff">Emblems</Button>
+  <Button id="flt_dungeon" onClick="onFilter" rectAlignment="UpperCenter"
+          offsetXY="66 -50" width="64" height="30" fontSize="13"
+          color="#333344" textColor="#ffffff">Dungeon</Button>
+  <Button id="flt_helper"  onClick="onFilter" rectAlignment="UpperCenter"
+          offsetXY="132 -50" width="64" height="30" fontSize="13"
+          color="#333344" textColor="#ffffff">Helper</Button>
+
+  <!-- Quick-spawn row (6 icon buttons). Button takes the click; the Image
+       overlay (raycast off) draws the icon on top. Icons are registered
+       as custom UI assets by the Lua side (registerIcons). -->
+  <Button id="qs_treasure" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="-135 -86" width="52" height="32"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_treasure" image="ic_treasure" raycastTarget="false"
+         rectAlignment="UpperCenter" offsetXY="-135 -86" width="42" height="28" />
+  <Button id="qs_monarch" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="-81 -86" width="52" height="32"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_monarch" image="ic_monarch" raycastTarget="false"
+         rectAlignment="UpperCenter" offsetXY="-81 -86" width="42" height="28" />
+  <Button id="qs_clue" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="-27 -86" width="52" height="32"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_clue" image="ic_clue" raycastTarget="false"
+         rectAlignment="UpperCenter" offsetXY="-27 -86" width="42" height="28" />
+  <Button id="qs_food" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="27 -86" width="52" height="32"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_food" image="ic_food" raycastTarget="false"
+         rectAlignment="UpperCenter" offsetXY="27 -86" width="42" height="28" />
+  <Button id="qs_map" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="81 -86" width="52" height="32"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_map" image="ic_map" raycastTarget="false"
+         rectAlignment="UpperCenter" offsetXY="81 -86" width="42" height="28" />
+  <Button id="qs_blood" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="135 -86" width="52" height="32"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_blood" image="ic_blood" raycastTarget="false"
+         rectAlignment="UpperCenter" offsetXY="135 -86" width="42" height="28" />
+
   <Text id="status"
-        rectAlignment="UpperCenter" offsetXY="0 -50"
-        width="330" height="20" fontSize="12"
+        rectAlignment="UpperCenter" offsetXY="0 -122"
+        width="330" height="18" fontSize="12"
         color="#bbbbbb" alignment="MiddleLeft">Loading…</Text>
 
   <!-- Row buttons (row1..rowN) injected here at runtime. -->
 
-  <!-- Pager, pinned to the bottom edge of the panel. -->
   <Button id="prevBtn" onClick="onPrevPage"
           rectAlignment="LowerLeft" offsetXY="12 12"
           width="150" height="34" fontSize="16"
