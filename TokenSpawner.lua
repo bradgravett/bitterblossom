@@ -13,7 +13,7 @@
 
 local CARD_BACK = ""
 
-local PAGE_SIZE = 8
+local PAGE_SIZE = 10
 local ROW_H     = 42
 local ROW_Y0    = -150
 local ROW_STEP  = 44
@@ -1098,8 +1098,8 @@ end
 -- Spawn to the RIGHT of the tile, clear of the floating panel. Flip the
 -- sign of SPAWN_RIGHT if tokens land on the left; raise SPAWN_UP if they
 -- clip the table.
-local SPAWN_RIGHT = 6
-local SPAWN_UP    = 2
+local SPAWN_RIGHT = -3
+local SPAWN_UP    = 1
 
 local function spawnPos()
   return self.getPosition()

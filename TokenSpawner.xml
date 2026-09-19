@@ -20,7 +20,7 @@
 
 <Panel id="tokenPanel" active="false"
        position="0 420 -5" rotation="0 0 180" scale="1 1 1"
-       width="350" height="630" color="#1b1b1bF2">
+       width="350" height="610" color="#1b1b1bF2">
 
   <InputField id="searchInput"
               onValueChanged="onSearchInput"
@@ -103,6 +103,18 @@
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row8txt" raycastTarget="false" rectAlignment="UpperCenter"
         offsetXY="0 -422" width="310" height="42" fontSize="13"
+        alignment="MiddleLeft" color="#ffffff"></Text>
+  <Button id="row9" onClick="onResultClick" rectAlignment="UpperCenter"
+          offsetXY="0 -466" width="326" height="42"
+          colors="#333333|#4a4a4a|#262626|#333333"></Button>
+  <Text id="row9txt" raycastTarget="false" rectAlignment="UpperCenter"
+        offsetXY="0 -466" width="310" height="42" fontSize="13"
+        alignment="MiddleLeft" color="#ffffff"></Text>
+  <Button id="row10" onClick="onResultClick" rectAlignment="UpperCenter"
+          offsetXY="0 -510" width="326" height="42"
+          colors="#333333|#4a4a4a|#262626|#333333"></Button>
+  <Text id="row10txt" raycastTarget="false" rectAlignment="UpperCenter"
+        offsetXY="0 -510" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
 
   <Button id="prevBtn" onClick="onPrevPage"
