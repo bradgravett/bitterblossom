@@ -6,7 +6,6 @@
 local filtered    = {}
 local page        = 0
 local uiReady     = false
-local injectTries = 0
 local panelOpen   = false
 
 local currentText = ""      -- live search box text
@@ -136,7 +135,12 @@ end
 
 ------------------------------------------------------------------- spawn --
 
-local function cardJSON(nickname, description, faceUrl)
+local function cardJSON(nickname, description, faceUrl, backUrl)
+  -- A real double-faced token passes its back face here: use it as the
+  -- BackURL and DON'T hide it (it's a game side you flip to, not hidden
+  -- info). Otherwise fall back to CARD_BACK, then the face itself.
+  local isDFC = backUrl ~= nil and backUrl ~= ""
+  local back = (isDFC and backUrl) or (CARD_BACK ~= "" and CARD_BACK) or faceUrl
   return {
     Name = "CardCustom",
     Transform = {
@@ -149,22 +153,24 @@ local function cardJSON(nickname, description, faceUrl)
     CustomDeck = {
       ["1"] = {
         FaceURL = faceUrl,
-        BackURL = (CARD_BACK ~= "" and CARD_BACK) or faceUrl,
+        BackURL = back,
         NumWidth = 1, NumHeight = 1,
-        BackIsHidden = true, UniqueBack = false, Type = 0,
+        BackIsHidden = not isDFC, UniqueBack = false, Type = 0,
       },
     },
   }
 end
 
-local function spawnPosFor(color)
-  local ok, t = pcall(function()
-    return Player[color] and Player[color].getHandTransform()
-  end)
-  if ok and t then
-    return t.position + t.forward * 8 + Vector(0, 2, 0)
-  end
-  return self.getPosition() + Vector(0, 3, 0)
+-- Spawn to the RIGHT of the tile, clear of the floating panel. Flip the
+-- sign of SPAWN_RIGHT if tokens land on the left; raise SPAWN_UP if they
+-- clip the table.
+local SPAWN_RIGHT = 6
+local SPAWN_UP    = 2
+
+local function spawnPos()
+  return self.getPosition()
+    + self.getTransformRight() * SPAWN_RIGHT
+    + Vector(0, SPAWN_UP, 0)
 end
 
 local function spawnToken(t, playerColor)
@@ -174,11 +180,11 @@ local function spawnToken(t, playerColor)
     return
   end
 
-  local data = cardJSON(t.name, descFor(t), t.img)
+  local data = cardJSON(t.name, descFor(t), t.img, t.back)
 
-  -- Alternate printings -> selectable object States. State 1 is the default
-  -- face (t.img, original art); each variant URL becomes states 2, 3, ...
-  -- Players switch printings via the state menu / number keys in TTS.
+  -- Alternate printings -> selectable object States (single-faced tokens
+  -- only; DFCs carry no variants, so this is skipped for them). State 1 is
+  -- the original art; each variant URL becomes states 2, 3, ...
   if t.variants and #t.variants > 0 then
     data.States = {}
     for i, url in ipairs(t.variants) do
@@ -188,12 +194,17 @@ local function spawnToken(t, playerColor)
 
   spawnObjectJSON({
     json = JSON.encode(data),
-    position = spawnPosFor(playerColor),
+    position = spawnPos(),
     rotation = { 0, 180, 0 },
   })
 
   local n = 1 + (t.variants and #t.variants or 0)
-  local extra = (n > 1) and ("  (" .. n .. " printings)") or ""
+  local extra = ""
+  if t.back and t.back ~= "" then
+    extra = "  (double-faced)"
+  elseif n > 1 then
+    extra = "  (" .. n .. " printings)"
+  end
   broadcastToColor("Spawned " .. t.name .. extra, playerColor, { 0.6, 1, 0.6 })
 end
 
@@ -216,22 +227,31 @@ local function renderPage()
   if page >= pages then page = pages - 1 end
   if page < 0 then page = 0 end
 
+  -- Rows are STATIC in the XML (setValue works on those; injected buttons
+  -- lose their text when active is toggled). Empty rows are blanked and
+  -- made transparent rather than deactivated.
+  local ROW_ON  = "#333333|#4a4a4a|#262626|#333333"
+  local ROW_OFF = "#00000000|#00000000|#00000000|#00000000"
   local base = page * PAGE_SIZE
   for i = 1, PAGE_SIZE do
-    local id = "row" .. i
+    local btn = "row" .. i        -- click target (Button)
+    local txt = "row" .. i .. "txt"  -- label (Text overlay); setValue targets this
     local t = filtered[base + i]
     if t then
-      self.UI.setValue(id, rowLabel(t))
-      self.UI.setAttribute(id, "textColor",
+      self.UI.setValue(txt, rowLabel(t))
+      self.UI.setAttribute(txt, "color",
         (t.img == "" and "#888888") or "#ffffff")
-      self.UI.setAttribute(id, "active", true)
+      self.UI.setAttribute(btn, "colors", ROW_ON)
     else
-      self.UI.setAttribute(id, "active", false)
+      self.UI.setValue(txt, "")
+      self.UI.setAttribute(btn, "colors", ROW_OFF)
     end
   end
 
   self.UI.setAttribute("prevBtn", "active", tostring(page > 0))
+  self.UI.setAttribute("prevBtn", "textColor", "#ffffff")
   self.UI.setAttribute("nextBtn", "active", tostring(page < pages - 1))
+  self.UI.setAttribute("nextBtn", "textColor", "#ffffff")
 
   local msg
   if total == 0 then
@@ -260,66 +280,17 @@ local function applyFilters()
   renderPage()
 end
 
+-- Full 4-state colour blocks. Single `color` lets TTS derive the pressed
+-- tint by darkening, which reads near-black on a dark base.
+local FILTER_ON  = "#5B21B6|#6d34d6|#4a1a9c|#5B21B6"
+local FILTER_OFF = "#333344|#404058|#2a2a38|#333344"
+
 local function updateFilterButtons()
   for _, fid in ipairs(FILTER_IDS) do
     local on = (FILTER_CAT[fid] == activeCat)
-    self.UI.setAttribute(fid, "color", on and "#5B21B6" or "#333344")
+    self.UI.setAttribute(fid, "colors", on and FILTER_ON or FILTER_OFF)
+    self.UI.setAttribute(fid, "textColor", "#ffffff")
   end
-end
-
-local function findById(nodes, id)
-  for _, n in ipairs(nodes or {}) do
-    if n.attributes and n.attributes.id == id then return n end
-    local hit = findById(n.children, id)
-    if hit then return hit end
-  end
-  return nil
-end
-
-local injectRows
-injectRows = function()
-  local xml = self.UI.getXmlTable()
-  local panel = xml and findById(xml, "tokenPanel")
-  if not panel then
-    injectTries = injectTries + 1
-    if injectTries > 20 then
-      print("[TokenSpawner] gave up: no #tokenPanel in object UI XML")
-      return
-    end
-    Wait.time(injectRows, 0.5)
-    return
-  end
-
-  panel.children = panel.children or {}
-  for i = 1, PAGE_SIZE do
-    local yOff = ROW_Y0 - (i - 1) * ROW_STEP
-    panel.children[#panel.children + 1] = {
-      tag = "Button",
-      attributes = {
-        id = "row" .. i,
-        active = false,
-        onClick = "onResultClick",
-        rectAlignment = "UpperCenter",
-        offsetXY = "0 " .. yOff,
-        width = 326, height = ROW_H,
-        fontSize = 13,
-        alignment = "MiddleLeft",
-        colors = "#333333|#4a4a4a|#262626|#333333",
-        textColor = "#ffffff",
-      },
-      value = "",
-    }
-  end
-
-  self.UI.setXmlTable(xml)
-  print("[TokenSpawner] injected " .. PAGE_SIZE .. " row slots, "
-    .. #TOKENS .. " tokens loaded")
-
-  Wait.time(function()
-    uiReady = true
-    updateFilterButtons()
-    applyFilters()
-  end, 0.3)
 end
 
 ------------------------------------------------------------ ui callbacks --
@@ -369,5 +340,10 @@ end
 function onLoad()
   buildIndex()
   registerIcons()
-  injectRows()
+  -- Let the pasted XML UI finish parsing, then populate the static rows.
+  Wait.time(function()
+    uiReady = true
+    updateFilterButtons()
+    applyFilters()
+  end, 0.3)
 end

@@ -33,7 +33,7 @@ import config as cfg
 # ======================================================================= #
 
 CSV_COLS = ["id", "name", "type_line", "power", "toughness",
-            "colors", "text", "image", "variants"]
+            "colors", "text", "image", "back", "variants"]
 
 
 def node_str(obj, *path):
@@ -152,8 +152,10 @@ def stage_csv():
         if not keep:
             continue
 
+        # Front face, and (for double-faced tokens) the distinct back face.
         image = node_str(c, "image_uris", "normal") \
             or node_str(c, "card_faces", 0, "image_uris", "normal")
+        back = node_str(c, "card_faces", 1, "image_uris", "normal")
         if not image:
             continue
 
@@ -173,7 +175,8 @@ def stage_csv():
         key = mechanical_key(name, type_line, power, toughness, colors, text)
         is_sld = set_code.lower() == "sld"
         groups.setdefault(key, []).append(
-            {"id": tid, "image": image, "released": released, "sld": is_sld})
+            {"id": tid, "image": image, "back": back,
+             "released": released, "sld": is_sld})
         fields.setdefault(key, {
             "name": name, "type_line": type_line, "power": power,
             "toughness": toughness, "colors": colors, "text": text,
@@ -194,17 +197,23 @@ def stage_csv():
         others = printings[1:]
         others.sort(key=lambda p: p["released"], reverse=True)  # newest first
         # Newest non-Secret-Lair, then newest Secret Lair, each capped.
-        non_sld = [p for p in others if not p["sld"]][:max(0, var_cap)]
-        sld     = [p for p in others if p["sld"]][:max(0, sld_cap)]
-        extras = non_sld + sld
-        variant_total += len(non_sld)
-        sld_total += len(sld)
         f = fields[key]
+        is_dfc = bool(primary.get("back"))
+        if is_dfc:
+            # Double-faced token: front + real back face, no printing variants.
+            extras = []
+        else:
+            non_sld = [p for p in others if not p["sld"]][:max(0, var_cap)]
+            sld     = [p for p in others if p["sld"]][:max(0, sld_cap)]
+            extras = non_sld + sld
+            variant_total += len(non_sld)
+            sld_total += len(sld)
         seen[key] = {
             "id": primary["id"], "name": f["name"], "type_line": f["type_line"],
             "power": f["power"], "toughness": f["toughness"],
             "colors": f["colors"], "text": f["text"],
             "image": primary["image"],
+            "back": primary.get("back", ""),
             "variants": "|".join(e["image"] for e in extras),
             "_released": primary["released"],
         }
@@ -226,6 +235,7 @@ def stage_csv():
             colors = (r.get("colors") or "").strip() or "c"
             text = (r.get("text") or "").strip()
             image = (r.get("image") or "").strip()
+            back = (r.get("back") or "").strip()          # optional DFC back
             variants = (r.get("variants") or "").strip()  # optional, pipe-joined
             key = mechanical_key(name, type_line, power, toughness, colors, text)
             if key in seen:
@@ -235,8 +245,8 @@ def stage_csv():
             seen[key] = {
                 "id": tid, "name": name, "type_line": type_line,
                 "power": power, "toughness": toughness, "colors": colors,
-                "text": text, "image": image, "variants": variants,
-                "_released": "9999-99-99",
+                "text": text, "image": image, "back": back,
+                "variants": variants, "_released": "9999-99-99",
             }
 
     # --- id collision check (image filenames must be unique) -------------
@@ -313,9 +323,14 @@ def stage_images():
 
     for r in rows:
         tid = (r["id"] or "").strip()
-        # primary (state 1)
+        # primary (front face)
         fetch((r.get("image") or "").strip(),
               os.path.join(cfg.IMAGE_DIR, f"{tid}.jpg"), tid)
+        # back face (double-faced tokens) -> <id>-back.jpg
+        back = (r.get("back") or "").strip()
+        if back:
+            fetch(back, os.path.join(cfg.IMAGE_DIR, f"{tid}-back.jpg"),
+                  f"{tid}-back")
         # variants (states 2+), pipe-joined source urls
         vs = (r.get("variants") or "").strip()
         if vs:
@@ -357,9 +372,9 @@ LUA_HEADER = '''--[[
 
 ------------------------------------------------------------------ config --
 
-local CARD_BACK = ""
+local CARD_BACK = "%%CARD_BACK%%"
 
-local PAGE_SIZE = 6
+local PAGE_SIZE = 8
 local ROW_H     = 42
 local ROW_Y0    = -150
 local ROW_STEP  = 44
@@ -394,6 +409,8 @@ def stage_lua():
         cols = lua_escape((r.get("colors") or "").strip() or "c")
         text = lua_escape((r.get("text") or "").strip())
         img = lua_escape(base + tid + ".jpg")
+        back = (r.get("back") or "").strip()
+        back_url = lua_escape(base + tid + "-back.jpg") if back else ""
 
         parts = [f'id="{lua_escape(tid)}"', f'name="{name}"', f'colors="{cols}"']
         if pow_ != "" and tou != "":
@@ -402,6 +419,8 @@ def stage_lua():
         parts.append(f'types="{tline}"')
         parts.append(f'text="{text}"')
         parts.append(f'img="{img}"')
+        if back_url:
+            parts.append(f'back="{back_url}"')
 
         # Variants (states 2+): derive final jsDelivr URLs from id + -v<n>.
         vs = (r.get("variants") or "").strip()
@@ -413,8 +432,10 @@ def stage_lua():
 
         body.append("  { " + ", ".join(parts) + " },")
 
+    header = LUA_HEADER.replace(
+        "%%CARD_BACK%%", lua_escape(getattr(cfg, "CARD_BACK", "")))
     with open(cfg.OUTPUT_LUA, "w", encoding="utf-8") as f:
-        f.write(LUA_HEADER + "\n".join(body) + "\n" + engine)
+        f.write(header + "\n".join(body) + "\n" + engine)
 
     print(f"[lua] {len(rows)} tokens -> {cfg.OUTPUT_LUA}")
     if missing:

@@ -13,7 +13,7 @@
 
 local CARD_BACK = ""
 
-local PAGE_SIZE = 6
+local PAGE_SIZE = 8
 local ROW_H     = 42
 local ROW_Y0    = -150
 local ROW_STEP  = 44
@@ -90,7 +90,7 @@ local TOKENS = {
   { id="acr-7", name="The Capitoline Triad Emblem", colors="c", types="Emblem", text="Creatures you control have base power and toughness 9/9.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/acr-7.jpg" },
   { id="xln-8", name="Treasure", colors="c", types="Token Artifact — Treasure", text="{T}, Sacrifice this token: Add one mana of any color.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-8.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-8-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-8-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-8-v4.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-8-v5.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-8-v6.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-8-v7.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-8-v8.jpg"} },
   { id="m14-7", name="Elemental", colors="R", pow="1", tou="1", types="Token Creature — Elemental", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m14-7.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m14-7-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m14-7-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m14-7-v4.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m14-7-v5.jpg"} },
-  { id="f17-10", name="Vampire // Treasure", colors="c", types="Token Creature — Vampire // Token Artifact — Treasure", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-10.jpg" },
+  { id="f17-10", name="Vampire // Treasure", colors="c", types="Token Creature — Vampire // Token Artifact — Treasure", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-10.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-10-back.jpg" },
   { id="acr-3", name="Human Rogue", colors="W", pow="1", tou="1", types="Token Creature — Human Rogue", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/acr-3.jpg" },
   { id="dmr-3", name="Cat", colors="B", pow="2", tou="1", types="Token Creature — Cat", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dmr-3.jpg" },
   { id="c15-11", name="Lightning Rager", colors="R", pow="5", tou="1", types="Token Creature — Elemental", text="Trample, haste At the beginning of the end step, sacrifice this creature.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c15-11.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c15-11-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c15-11-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c15-11-v4.jpg"} },
@@ -195,7 +195,7 @@ local TOKENS = {
   { id="znr-6", name="Illusion", colors="U", pow="*", tou="*", types="Token Creature — Illusion", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-6.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-6-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-6-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-6-v4.jpg"} },
   { id="znr-4", name="Kor Warrior", colors="W", pow="1", tou="1", types="Token Creature — Kor Warrior", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-4.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-4-v2.jpg"} },
   { id="afr-2", name="Icingdeath, Frost Tongue", colors="W", types="Token Legendary Artifact — Equipment", text="Equipped creature gets +2/+0. Whenever equipped creature attacks, tap target creature defending player controls. Equip {2}", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/afr-2.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/afr-2-v2.jpg"} },
-  { id="cc2-9", name="Snake // Zombie", colors="c", types="Token Creature — Snake // Token Creature — Zombie", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cc2-9.jpg" },
+  { id="cc2-9", name="Snake // Zombie", colors="c", types="Token Creature — Snake // Token Creature — Zombie", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cc2-9.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cc2-9-back.jpg" },
   { id="isd-4", name="Demon", colors="B", pow="5", tou="5", types="Token Creature — Demon", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-4.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-4-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-4-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-4-v4.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-4-v5.jpg"} },
   { id="khm-12", name="Dwarf Berserker", colors="R", pow="2", tou="1", types="Token Creature — Dwarf Berserker", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/khm-12.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/khm-12-v2.jpg"} },
   { id="mh3-18", name="Phyrexian Wurm", colors="B", pow="2", tou="1", types="Token Artifact Creature — Phyrexian Wurm", text="Lifelink", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mh3-18.jpg" },
@@ -243,7 +243,7 @@ local TOKENS = {
   { id="m19-15", name="Ajani, Adversary of Tyrants Emblem", colors="c", types="Emblem — Ajani", text="At the beginning of your end step, create three 1/1 white Cat creature tokens with lifelink.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m19-15.jpg" },
   { id="xln-5", name="Dinosaur", colors="G", pow="3", tou="3", types="Token Creature — Dinosaur", text="Trample (This creature can deal excess combat damage to the player or planeswalker it's attacking.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-5.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-5-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-5-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-5-v4.jpg"} },
   { id="m19-17", name="Vivien Reid Emblem", colors="c", types="Emblem — Vivien", text="Creatures you control get +2/+2 and have vigilance, trample, and indestructible.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m19-17.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m19-17-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m19-17-v3.jpg"} },
-  { id="gk1-3", name="Weird // Goblin", colors="c", types="Token Creature — Weird // Token Creature — Goblin", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-3.jpg" },
+  { id="gk1-3", name="Weird // Goblin", colors="c", types="Token Creature — Weird // Token Creature — Goblin", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-3.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-3-back.jpg" },
   { id="bfz-6", name="Kor Ally", colors="W", pow="1", tou="1", types="Token Creature — Kor Ally", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bfz-6.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bfz-6-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bfz-6-v3.jpg"} },
   { id="akh-17", name="Warrior", colors="W", pow="1", tou="1", types="Token Creature — Warrior", text="Vigilance", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/akh-17.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/akh-17-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/akh-17-v3.jpg"} },
   { id="c16-12", name="Goblin", colors="R", pow="1", tou="1", types="Token Creature — Goblin", text="Creatures you control attack each combat if able.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c16-12.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c16-12-v2.jpg"} },
@@ -271,7 +271,7 @@ local TOKENS = {
   { id="40k-18", name="Tyranid", colors="G", pow="5", tou="5", types="Token Creature — Tyranid", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/40k-18.jpg" },
   { id="c14-25", name="Treefolk", colors="G", pow="*", tou="*", types="Token Creature — Treefolk", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c14-25.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c14-25-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c14-25-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c14-25-v4.jpg"} },
   { id="40k-17", name="Tyranid", colors="G", pow="1", tou="1", types="Token Creature — Tyranid", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/40k-17.jpg" },
-  { id="f17-11", name="Dinosaur // Treasure", colors="c", types="Token Creature — Dinosaur // Token Artifact — Treasure", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-11.jpg" },
+  { id="f17-11", name="Dinosaur // Treasure", colors="c", types="Token Creature — Dinosaur // Token Artifact — Treasure", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-11.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-11-back.jpg" },
   { id="mom-9", name="Elemental", colors="RU", pow="1", tou="1", types="Token Creature — Elemental", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-9.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-9-v2.jpg"} },
   { id="blb-4", name="Wall", colors="W", pow="0", tou="4", types="Token Creature — Wall", text="Defender", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blb-4.jpg" },
   { id="mkm-19", name="Thopter", colors="c", pow="0", tou="0", types="Token Artifact Creature — Thopter", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mkm-19.jpg" },
@@ -299,7 +299,7 @@ local TOKENS = {
   { id="ddc-3", name="Thrull", colors="B", pow="0", tou="1", types="Token Creature — Thrull", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddc-3.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddc-3-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddc-3-v3.jpg"} },
   { id="bro-8", name="Soldier", colors="c", pow="1", tou="1", types="Token Artifact Creature — Soldier", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bro-8.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bro-8-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bro-8-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bro-8-v4.jpg"} },
   { id="ugl-93", name="Sheep", colors="G", pow="2", tou="2", types="Token Creature — Sheep", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ugl-93.jpg" },
-  { id="gk1-11", name="Voja // Saproling", colors="c", types="Token Legendary Creature — Wolf // Token Creature — Saproling", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-11.jpg" },
+  { id="gk1-11", name="Voja // Saproling", colors="c", types="Token Legendary Creature — Wolf // Token Creature — Saproling", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-11.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-11-back.jpg" },
   { id="brc-9", name="Mishra's Warform", colors="c", pow="4", tou="4", types="Token Artifact Creature — Construct", text="(This token has the abilities and other types of the copied artifact.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/brc-9.jpg" },
   { id="znr-2", name="Cat", colors="W", pow="1", tou="1", types="Token Creature — Cat", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-2.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-2-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/znr-2-v3.jpg"} },
   { id="hou-9", name="Sunscourge Champion", colors="B", pow="4", tou="4", types="Token Creature — Zombie Human Wizard", text="When Sunscourge Champion enters the battlefield, you gain life equal to its power.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hou-9.jpg" },
@@ -316,20 +316,20 @@ local TOKENS = {
   { id="m13-11", name="Liliana of the Dark Realms Emblem", colors="c", types="Emblem — Liliana", text="Swamps you control have '{T}: Add {B}{B}{B}{B}.'", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m13-11.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m13-11-v2.jpg"} },
   { id="mom-11", name="Phyrexian Hydra", colors="GW", pow="3", tou="3", types="Token Creature — Phyrexian Hydra", text="Reach", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-11.jpg" },
   { id="blb-30", name="Ral, Crackling Wit Emblem", colors="c", types="Emblem", text="Instant and sorcery spells you cast have storm.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blb-30.jpg" },
-  { id="mom-18", name="Incubator // Phyrexian", colors="c", types="Token Artifact — Incubator // Token Artifact Creature — Phyrexian", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-18.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-18-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-18-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-18-v4.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-18-v5.jpg"} },
-  { id="clb-20", name="Undercity // The Initiative", colors="c", types="Dungeon — Undercity // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-20.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-20-v2.jpg"} },
+  { id="mom-18", name="Incubator // Phyrexian", colors="c", types="Token Artifact — Incubator // Token Artifact Creature — Phyrexian", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-18.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-18-back.jpg" },
+  { id="clb-20", name="Undercity // The Initiative", colors="c", types="Dungeon — Undercity // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-20.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-20-back.jpg" },
   { id="tsr-15", name="Metallic Sliver", colors="c", pow="1", tou="1", types="Token Artifact Creature — Sliver", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/tsr-15.jpg" },
   { id="l14-3", name="Squid", colors="U", pow="1", tou="1", types="Token Creature — Squid", text="Islandwalk (This creature can't be blocked as long as defending player controls an Island.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l14-3.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l14-3-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l14-3-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l14-3-v4.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l14-3-v5.jpg"} },
   { id="cmm-60", name="Avacyn", colors="W", pow="8", tou="8", types="Token Legendary Creature — Angel", text="Flying, vigilance, indestructible", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cmm-60.jpg" },
   { id="who-34", name="Alien", colors="W", pow="2", tou="2", types="Token Creature — Alien", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-34.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-34-v2.jpg"} },
   { id="xln-4", name="Pirate", colors="B", pow="2", tou="2", types="Token Creature — Pirate", text="Menace (This creature can't be blocked except by two or more creatures.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-4.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/xln-4-v2.jpg"} },
   { id="mma-7", name="Spider", colors="B", pow="2", tou="4", types="Token Creature — Spider", text="Reach", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mma-7.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mma-7-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mma-7-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mma-7-v4.jpg"} },
-  { id="ust-6", name="Thopter // Thopter", colors="c", types="Token Artifact Creature — Thopter // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-6.jpg" },
+  { id="ust-6", name="Thopter // Thopter", colors="c", types="Token Artifact Creature — Thopter // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-6.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-6-back.jpg" },
   { id="mbs-3", name="Golem", colors="c", pow="9", tou="9", types="Token Artifact Creature — Golem", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mbs-3.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mbs-3-v2.jpg"} },
   { id="m15-5", name="Beast", colors="B", pow="3", tou="3", types="Token Creature — Beast", text="Deathtouch", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m15-5.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m15-5-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m15-5-v3.jpg"} },
   { id="tla-11", name="Soldier", colors="R", pow="2", tou="2", types="Token Creature — Soldier", text="Firebending 1 (Whenever this token attacks, add {R}. This mana lasts until end of combat.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/tla-11.jpg" },
   { id="war-11", name="Zombie Warrior", colors="B", pow="4", tou="4", types="Token Creature — Zombie Warrior", text="Vigilance", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/war-11.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/war-11-v2.jpg"} },
-  { id="f18-1", name="Merfolk // Treasure", colors="c", types="Token Creature — Merfolk // Token Artifact — Treasure", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-1.jpg" },
+  { id="f18-1", name="Merfolk // Treasure", colors="c", types="Token Creature — Merfolk // Token Artifact — Treasure", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-1.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-1-back.jpg" },
   { id="ddh-1", name="Griffin", colors="W", pow="2", tou="2", types="Token Creature — Griffin", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddh-1.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddh-1-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddh-1-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddh-1-v4.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddh-1-v5.jpg"} },
   { id="clb-41", name="Phyrexian Beast", colors="G", pow="4", tou="4", types="Token Creature — Phyrexian Beast", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-41.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-41-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-41-v3.jpg"} },
   { id="lci-8", name="Skeleton Pirate", colors="B", pow="2", tou="2", types="Token Creature — Skeleton Pirate", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/lci-8.jpg" },
@@ -378,7 +378,7 @@ local TOKENS = {
   { id="ecl-4", name="Elf", colors="BG", pow="2", tou="2", types="Token Creature — Elf", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ecl-4.jpg" },
   { id="cn2-5", name="Assassin", colors="B", pow="1", tou="1", types="Token Creature — Assassin", text="Deathtouch, haste", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cn2-5.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cn2-5-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cn2-5-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cn2-5-v4.jpg"} },
   { id="who-13", name="Human Rogue", colors="B", pow="2", tou="2", types="Token Creature — Human Rogue", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-13.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-13-v2.jpg"} },
-  { id="f12-1a", name="Human // Wolf", colors="c", types="Token Creature — Human // Token Creature — Wolf", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f12-1a.jpg" },
+  { id="f12-1a", name="Human // Wolf", colors="c", types="Token Creature — Human // Token Creature — Wolf", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f12-1a.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f12-1a-back.jpg" },
   { id="khm-21", name="Tibalt, Cosmic Impostor Emblem", colors="c", types="Emblem", text="You may play cards exiled with Tibalt, Cosmic Impostor, and you may spend mana as though it were mana of any color to cast those spells.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/khm-21.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/khm-21-v2.jpg"} },
   { id="dmr-12", name="Sheep", colors="G", pow="0", tou="1", types="Token Creature — Sheep", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dmr-12.jpg" },
   { id="blb-2", name="Intrepid Rabbit", colors="W", pow="1", tou="1", types="Token Creature — Rabbit Soldier", text="When this creature enters, target creature you control gets +1/+1 until end of turn. (This token's mana cost is {2}{W}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blb-2.jpg" },
@@ -403,7 +403,7 @@ local TOKENS = {
   { id="sos-9", name="Pest", colors="BG", pow="1", tou="1", types="Token Creature — Pest", text="Whenever this token attacks, you gain 1 life.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/sos-9.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/sos-9-v2.jpg"} },
   { id="c21-26", name="Golem", colors="c", pow="3", tou="3", types="Token Artifact Creature — Golem", text="Trample", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c21-26.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c21-26-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c21-26-v3.jpg"} },
   { id="nec-1", name="Shrine", colors="c", pow="1", tou="1", types="Token Enchantment Creature — Shrine", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/nec-1.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/nec-1-v2.jpg"} },
-  { id="ust-3", name="Spirit // Spirit", colors="c", types="Token Creature — Spirit // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-3.jpg" },
+  { id="ust-3", name="Spirit // Spirit", colors="c", types="Token Creature — Spirit // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-3.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-3-back.jpg" },
   { id="m21-9", name="Pirate", colors="R", pow="1", tou="1", types="Token Creature — Pirate", text="This creature can't block. Creatures you control attack each combat if able.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-9.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-9-v2.jpg"} },
   { id="msc-3", name="Wall", colors="c", pow="0", tou="3", types="Token Creature — Wall", text="Defender, reach", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msc-3.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msc-3-v2.jpg"} },
   { id="afc-3", name="Illusion", colors="U", pow="1", tou="1", types="Token Creature — Illusion", text="This creature gets +1/+0 for each other Illusion you control.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/afc-3.jpg" },
@@ -423,7 +423,7 @@ local TOKENS = {
   { id="ori-12", name="Jace, Telepath Unbound Emblem", colors="c", types="Emblem — Jace", text="Whenever you cast a spell, target opponent puts the top five cards of their library into their graveyard.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ori-12.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ori-12-v2.jpg"} },
   { id="2x2-21", name="Phyrexian Golem", colors="c", pow="3", tou="3", types="Token Artifact Creature — Phyrexian Golem", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/2x2-21.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/2x2-21-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/2x2-21-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/2x2-21-v4.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/2x2-21-v5.jpg"} },
   { id="eld-7", name="Dwarf", colors="R", pow="1", tou="1", types="Token Creature — Dwarf", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-7.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-7-v2.jpg"} },
-  { id="f17-12", name="Pirate // Treasure", colors="c", types="Token Creature — Pirate // Token Artifact — Treasure", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-12.jpg" },
+  { id="f17-12", name="Pirate // Treasure", colors="c", types="Token Creature — Pirate // Token Artifact — Treasure", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-12.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f17-12-back.jpg" },
   { id="brc-5", name="Phyrexian Myr", colors="U", pow="2", tou="1", types="Token Artifact Creature — Phyrexian Myr", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/brc-5.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/brc-5-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/brc-5-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/brc-5-v4.jpg"} },
   { id="one-13", name="Koth, Fire of Resistance Emblem", colors="c", types="Emblem", text="Whenever a Mountain enters the battlefield under your control, this emblem deals 4 damage to any target.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/one-13.jpg" },
   { id="bro-6", name="Golem", colors="c", pow="*", tou="*", types="Token Artifact Creature — Golem", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bro-6.jpg" },
@@ -459,9 +459,9 @@ local TOKENS = {
   { id="drc-3", name="Zombie", colors="W", pow="1", tou="1", types="Token Creature — Zombie", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/drc-3.jpg" },
   { id="otj-3", name="Ox", colors="W", pow="2", tou="2", types="Token Creature — Ox", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/otj-3.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/otj-3-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/otj-3-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/otj-3-v4.jpg"} },
   { id="cmm-71", name="Wizard", colors="R", pow="1", tou="1", types="Token Creature — Wizard", text="{T}: Add {R}. Spend this mana only to cast a planeswalker spell.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cmm-71.jpg" },
-  { id="l16-5", name="Servo // Thopter", colors="c", types="Token Artifact Creature — Servo // Token Artifact Creature — Thopter", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l16-5.jpg" },
+  { id="l16-5", name="Servo // Thopter", colors="c", types="Token Artifact Creature — Servo // Token Artifact Creature — Thopter", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l16-5.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l16-5-back.jpg" },
   { id="dmu-15", name="Badger", colors="G", pow="3", tou="3", types="Token Creature — Badger", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dmu-15.jpg" },
-  { id="pemn-1z", name="Zombie // Zombie", colors="c", types="Token Creature — Zombie // Token Creature — Zombie", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/pemn-1z.jpg" },
+  { id="pemn-1z", name="Zombie // Zombie", colors="c", types="Token Creature — Zombie // Token Creature — Zombie", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/pemn-1z.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/pemn-1z-back.jpg" },
   { id="m21-19", name="Dog", colors="W", pow="1", tou="1", types="Token Creature — Dog", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-19.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-19-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-19-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-19-v4.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-19-v5.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-19-v6.jpg"} },
   { id="dsk-12", name="Spider", colors="G", pow="2", tou="2", types="Token Creature — Spider", text="Reach", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dsk-12.jpg" },
   { id="clb-2", name="Knight", colors="W", pow="2", tou="2", types="Token Creature — Knight", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-2.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-2-v2.jpg"} },
@@ -511,7 +511,7 @@ local TOKENS = {
   { id="dom-7", name="Demon", colors="B", pow="6", tou="6", types="Token Creature — Demon", text="Flying, trample At the beginning of your upkeep, sacrifice another creature. If you can't, this creature deals 6 damage to you.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dom-7.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dom-7-v2.jpg"} },
   { id="c14-30", name="Stoneforged Blade", colors="c", types="Token Artifact — Equipment", text="Indestructible Equipped creature gets +5/+5 and has double strike. Equip {0}", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c14-30.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c14-30-v2.jpg"} },
   { id="big-1", name="Bat", colors="B", pow="2", tou="1", types="Token Creature — Bat", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/big-1.jpg" },
-  { id="ust-9", name="Zombie // Zombie", colors="c", types="Token Creature — Zombie // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-9.jpg" },
+  { id="ust-9", name="Zombie // Zombie", colors="c", types="Token Creature — Zombie // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-9.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-9-back.jpg" },
   { id="akh-12", name="Temmet, Vizier of Naktamun", colors="W", pow="2", tou="2", types="Token Creature — Zombie Human Cleric", text="Temmet, Vizier of Naktamun is legendary. At the beginning of combat on your turn, target creature token you control gets +1/+1 until end of turn and can't be blocked this turn.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/akh-12.jpg" },
   { id="onc-15", name="Phyrexian Insect", colors="G", pow="1", tou="1", types="Token Creature — Phyrexian Insect", text="Infect (This creature deals damage to creatures in the form of -1/-1 counters and to players in the form of poison counters.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/onc-15.jpg" },
   { id="bbd-8", name="Rowan Kenrith Emblem", colors="c", types="Emblem — Rowan", text="Whenever you activate an ability that isn't a mana ability, copy it. You may choose new targets for the copy.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bbd-8.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bbd-8-v2.jpg"} },
@@ -519,10 +519,10 @@ local TOKENS = {
   { id="m21-20", name="Cat", colors="G", pow="1", tou="1", types="Token Creature — Cat", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-20.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-20-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m21-20-v3.jpg"} },
   { id="thb-3", name="Pegasus", colors="W", pow="2", tou="2", types="Token Creature — Pegasus", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/thb-3.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/thb-3-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/thb-3-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/thb-3-v4.jpg"} },
   { id="blb-5", name="Warren Warleader", colors="W", pow="1", tou="1", types="Token Creature — Rabbit Knight", text="Whenever you attack, choose one — • Create a 1/1 white Rabbit creature token that's tapped and attacking. • Attacking creatures you control get +1/+1 until end of turn. (This token's mana cost is {2}{W}{W}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blb-5.jpg" },
-  { id="f18-3", name="Illusion // Saproling", colors="c", types="Token Creature — Illusion // Token Creature — Saproling", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-3.jpg" },
+  { id="f18-3", name="Illusion // Saproling", colors="c", types="Token Creature — Illusion // Token Creature — Saproling", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-3.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-3-back.jpg" },
   { id="l14-2", name="Minotaur", colors="R", pow="2", tou="3", types="Token Creature — Minotaur", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l14-2.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l14-2-v2.jpg"} },
   { id="c17-4", name="Vampire", colors="B", pow="1", tou="1", types="Token Creature — Vampire", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c17-4.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c17-4-v2.jpg"} },
-  { id="ust-8", name="Vampire // Vampire", colors="c", types="Token Creature — Vampire // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-8.jpg" },
+  { id="ust-8", name="Vampire // Vampire", colors="c", types="Token Creature — Vampire // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-8.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-8-back.jpg" },
   { id="ori-8", name="Elemental", colors="G", pow="2", tou="2", types="Token Creature — Elemental", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ori-8.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ori-8-v2.jpg"} },
   { id="zen-4", name="Illusion", colors="U", pow="2", tou="2", types="Token Creature — Illusion", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/zen-4.jpg" },
   { id="eld-20", name="On an Adventure", colors="c", types="Card", text="After an Adventure resolves, you can place the exiled card here. You may cast the creature from exile.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-20.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-20-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-20-v3.jpg"} },
@@ -538,9 +538,9 @@ local TOKENS = {
   { id="isd-5", name="Vampire", colors="B", pow="2", tou="2", types="Token Creature — Vampire", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-5.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-5-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-5-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-5-v4.jpg"} },
   { id="thb-8", name="Elemental", colors="R", pow="*", tou="1", types="Token Creature — Elemental", text="Trample, haste", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/thb-8.jpg" },
   { id="who-19", name="Alien Insect", colors="GW", pow="1", tou="1", types="Token Creature — Alien Insect", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-19.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-19-v2.jpg"} },
-  { id="f18-2", name="City's Blessing // Elemental", colors="c", types="Card // Token Creature — Elemental", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-2.jpg" },
+  { id="f18-2", name="City's Blessing // Elemental", colors="c", types="Card // Token Creature — Elemental", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-2.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/f18-2-back.jpg" },
   { id="hou-2", name="Champion of Wits", colors="B", pow="4", tou="4", types="Token Creature — Zombie Naga Wizard", text="When Champion of Wits enters the battlefield, you may draw cards equal to its power. If you do, discard two cards.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hou-2.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hou-2-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hou-2-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hou-2-v4.jpg"} },
-  { id="ust-13", name="Beast // Beast", colors="c", types="Token Creature — Beast // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-13.jpg" },
+  { id="ust-13", name="Beast // Beast", colors="c", types="Token Creature — Beast // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-13.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-13-back.jpg" },
   { id="ecl-6", name="Goblin", colors="BR", pow="1", tou="1", types="Token Creature — Goblin", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ecl-6.jpg" },
   { id="who-14", name="Alien Warrior", colors="R", pow="2", tou="2", types="Token Creature — Alien Warrior", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-14.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-14-v2.jpg"} },
   { id="eld-14", name="Wolf", colors="BG", pow="2", tou="2", types="Token Creature — Wolf", text="When this creature dies, put a loyalty counter on each Garruk you control.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-14.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-14-v2.jpg"} },
@@ -550,7 +550,7 @@ local TOKENS = {
   { id="und-5", name="Giant Teddy Bear", colors="c", pow="5", tou="5", types="Token Creature — Giant Teddy Bear", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/und-5.jpg" },
   { id="pip-15", name="Junk", colors="c", types="Token Artifact — Junk", text="{T}, Sacrifice this artifact: Exile the top card of your library. You may play that card this turn. Activate only as a sorcery.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/pip-15.jpg" },
   { id="mid-5", name="Zombie", colors="B", pow="2", tou="2", types="Token Creature — Zombie", text="Decayed (This creature can't block. When it attacks, sacrifice it at end of combat.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-5.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-5-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-5-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-5-v4.jpg"} },
-  { id="gk1-4", name="Goblin // Soldier", colors="c", types="Token Creature — Goblin // Token Creature — Soldier", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-4.jpg" },
+  { id="gk1-4", name="Goblin // Soldier", colors="c", types="Token Creature — Goblin // Token Creature — Soldier", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-4.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-4-back.jpg" },
   { id="tmt-9", name="Mutagen", colors="c", types="Token Artifact — Mutagen", text="{1}, {T}, Sacrifice this token: Put a +1/+1 counter on target creature. Activate only as a sorcery.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/tmt-9.jpg" },
   { id="blb-19", name="Steampath Charger", colors="R", pow="1", tou="1", types="Token Creature — Lizard Warlock", text="When this creature dies, it deals 1 damage to target player. (This token's mana cost is {1}{R}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blb-19.jpg" },
   { id="who-38", name="Human", colors="W", pow="1", tou="1", types="Token Creature — Human", text="Ward {2} (Whenever this creature becomes the target of a spell or ability an opponent controls, counter it unless that player pays {2}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-38.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-38-v2.jpg"} },
@@ -585,11 +585,11 @@ local TOKENS = {
   { id="cn2-9", name="Lizard", colors="R", pow="8", tou="8", types="Token Creature — Lizard", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cn2-9.jpg" },
   { id="mom-6", name="First Mate Ragavan", colors="R", pow="2", tou="1", types="Token Legendary Creature — Monkey Pirate", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-6.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-6-v2.jpg"} },
   { id="one-2", name="Samurai", colors="W", pow="2", tou="2", types="Token Creature — Samurai", text="Double strike", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/one-2.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/one-2-v2.jpg"} },
-  { id="ust-17", name="Elemental // Elemental", colors="c", types="Token Creature — Elemental // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-17.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-17-v2.jpg"} },
+  { id="ust-17", name="Elemental // Elemental", colors="c", types="Token Creature — Elemental // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-17.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-17-back.jpg" },
   { id="blc-22", name="Hamster", colors="R", pow="1", tou="1", types="Token Creature — Hamster", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blc-22.jpg" },
   { id="msh-5", name="Leviathan", colors="U", pow="6", tou="5", types="Token Creature — Leviathan", text="Hexproof (This token can't be the target of spells or abilities your opponents control.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msh-5.jpg" },
   { id="hou-1", name="Adorned Pouncer", colors="B", pow="4", tou="4", types="Token Creature — Zombie Cat", text="Double strike", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hou-1.jpg" },
-  { id="ltr-h13", name="The Ring // The Ring Tempts You", colors="c", types="Emblem // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ltr-h13.jpg" },
+  { id="ltr-h13", name="The Ring // The Ring Tempts You", colors="c", types="Emblem // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ltr-h13.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ltr-h13-back.jpg" },
   { id="gk2-6", name="Goblin", colors="R", pow="2", tou="1", types="Token Creature — Goblin", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk2-6.jpg" },
   { id="mma-4", name="Illusion", colors="U", pow="1", tou="1", types="Token Creature — Illusion", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mma-4.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mma-4-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mma-4-v3.jpg"} },
   { id="c14-34", name="Teferi, Temporal Archmage Emblem", colors="c", types="Emblem — Teferi", text="You may activate loyalty abilities of planeswalkers you control on any player's turn any time you could cast an instant.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c14-34.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c14-34-v2.jpg"} },
@@ -627,7 +627,7 @@ local TOKENS = {
   { id="msc-24", name="Council of Reeds", colors="c", pow="2", tou="2", types="Token Legendary Creature — Human Scientist Hero", text="The \"legend rule\" doesn't apply to creatures you control. At the beginning of combat on your turn, if you've cast a noncreature spell this turn, create a token that's a copy of Council of Reeds. (This token's mana cost is {2}{U}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msc-24.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msc-24-v2.jpg"} },
   { id="blb-9", name="Thundertrap Trainer", colors="U", pow="1", tou="1", types="Token Creature — Otter Wizard", text="When this creature enters, look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order. (This token's mana cost is {1}{U}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blb-9.jpg" },
   { id="iko-2", name="Cat Bird", colors="W", pow="1", tou="1", types="Token Creature — Cat Bird", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/iko-2.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/iko-2-v2.jpg"} },
-  { id="dft-14", name="Start Your Engines! // Max Speed", colors="c", types="Card // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dft-14.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dft-14-v2.jpg"} },
+  { id="dft-14", name="Start Your Engines! // Max Speed", colors="c", types="Card // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dft-14.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dft-14-back.jpg" },
   { id="med-g8", name="Vraska, Golgari Queen Emblem", colors="c", types="Emblem — Vraska", text="Whenever a creature you control deals combat damage to a player, that player loses the game.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/med-g8.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/med-g8-v2.jpg"} },
   { id="msh-1", name="Wall", colors="c", pow="0", tou="4", types="Token Creature — Wall", text="Defender", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msh-1.jpg" },
   { id="ecl-3", name="Treefolk", colors="G", pow="3", tou="4", types="Token Creature — Treefolk", text="Reach", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ecl-3.jpg" },
@@ -649,7 +649,7 @@ local TOKENS = {
   { id="mh1-20", name="Serra the Benevolent Emblem", colors="c", types="Emblem — Serra", text="If you control a creature, damage that would reduce your life total to less than 1 reduces it to 1 instead.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mh1-20.jpg" },
   { id="mom-10", name="Knight", colors="UW", pow="2", tou="2", types="Token Creature — Knight", text="Vigilance", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mom-10.jpg" },
   { id="khm-16", name="Troll Warrior", colors="G", pow="4", tou="4", types="Token Creature — Troll Warrior", text="Trample", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/khm-16.jpg" },
-  { id="gk1-2", name="Soldier // Soldier", colors="c", types="Token Creature — Soldier // Token Creature — Soldier", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-2.jpg" },
+  { id="gk1-2", name="Soldier // Soldier", colors="c", types="Token Creature — Soldier // Token Creature — Soldier", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-2.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-2-back.jpg" },
   { id="gtc-4", name="Cleric", colors="BW", pow="1", tou="1", types="Token Creature — Cleric", text="{3}{W}{B}{B}, {T}, Sacrifice this creature: Return a card named Deathpact Angel from your graveyard to the battlefield.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gtc-4.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gtc-4-v2.jpg"} },
   { id="40k-7", name="Zephyrim", colors="W", pow="3", tou="3", types="Token Creature — Human Warrior", text="Flying, vigilance", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/40k-7.jpg" },
   { id="blb-24", name="Tender Wildguide", colors="G", pow="1", tou="1", types="Token Creature — Possum Druid", text="{T}: Add one mana of any color. {T}: Put a +1/+1 counter on this creature. (This token's mana cost is {1}{G}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blb-24.jpg" },
@@ -658,7 +658,7 @@ local TOKENS = {
   { id="soi-4", name="Vampire Knight", colors="B", pow="1", tou="1", types="Token Creature — Vampire Knight", text="Lifelink", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/soi-4.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/soi-4-v2.jpg"} },
   { id="ddi-2", name="Koth of the Hammer Emblem", colors="c", types="Emblem — Koth", text="Mountains you control have '{T}: This land deals 1 damage to any target.'", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ddi-2.jpg" },
   { id="hou-3", name="Dreamstealer", colors="B", pow="4", tou="4", types="Token Creature — Zombie Human Wizard", text="Menace Whenever Dreamstealer deals combat damage to a player, that player discards that many cards.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hou-3.jpg" },
-  { id="ust-14", name="Saproling // Saproling", colors="c", types="Token Creature — Saproling // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-14.jpg" },
+  { id="ust-14", name="Saproling // Saproling", colors="c", types="Token Creature — Saproling // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-14.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-14-back.jpg" },
   { id="e01-3", name="Horror", colors="B", pow="3", tou="3", types="Token Creature — Horror", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/e01-3.jpg" },
   { id="fra-5", name="Jace", colors="U", types="Token Planeswalker — Jace", text="−1: Surveil 1. (Look at the top card of your library. You may put that card into your graveyard.) −3: Draw a card.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/fra-5.jpg" },
   { id="dmu-6", name="Bird", colors="B", pow="1", tou="1", types="Token Creature — Bird", text="Flying This creature can't block.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/dmu-6.jpg" },
@@ -695,16 +695,16 @@ local TOKENS = {
   { id="ecc-11", name="Scarecrow", colors="c", pow="2", tou="2", types="Token Artifact Creature — Scarecrow", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ecc-11.jpg" },
   { id="40k-22", name="Insect", colors="c", pow="1", tou="1", types="Token Artifact Creature — Insect", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/40k-22.jpg" },
   { id="ltc-7", name="Wraith", colors="B", pow="3", tou="3", types="Token Creature — Wraith", text="Menace", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ltc-7.jpg" },
-  { id="ust-18", name="Clue // Clue", colors="c", types="Token Artifact — Clue // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-18.jpg" },
+  { id="ust-18", name="Clue // Clue", colors="c", types="Token Artifact — Clue // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-18.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-18-back.jpg" },
   { id="tdc-7", name="Wall", colors="W", pow="1", tou="3", types="Token Creature — Wall", text="Defender", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/tdc-7.jpg" },
   { id="blc-23", name="Prosperous Bandit", colors="R", pow="1", tou="1", types="Token Creature — Raccoon Rogue", text="First strike Whenever this creature deals combat damage to a player, create that many tapped Treasure tokens. (This token's mana cost is {2}{R}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blc-23.jpg" },
   { id="und-1", name="Beeble", colors="U", pow="1", tou="1", types="Token Creature — Beeble", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/und-1.jpg" },
-  { id="mid-19", name="Day // Night", colors="c", types="Card // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-19.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-19-v2.jpg"} },
+  { id="mid-19", name="Day // Night", colors="c", types="Card // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-19.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-19-back.jpg" },
   { id="iko-11", name="Dinosaur Beast", colors="G", pow="*", tou="*", types="Token Creature — Dinosaur Beast", text="Trample", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/iko-11.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/iko-11-v2.jpg"} },
   { id="con-2", name="Elemental", colors="R", pow="3", tou="1", types="Token Creature — Elemental", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/con-2.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/con-2-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/con-2-v3.jpg"} },
   { id="hob-1", name="Bird Soldier", colors="c", pow="4", tou="4", types="Token Creature — Bird Soldier", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hob-1.jpg" },
   { id="hob-6", name="Dwarf", colors="R", pow="2", tou="2", types="Token Creature — Dwarf", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hob-6.jpg" },
-  { id="gk1-1", name="Copy // Horror", colors="c", types="Token // Token Creature — Horror", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-1.jpg" },
+  { id="gk1-1", name="Copy // Horror", colors="c", types="Token // Token Creature — Horror", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-1.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-1-back.jpg" },
   { id="shm-8", name="Faerie Rogue", colors="BU", pow="1", tou="1", types="Token Creature — Faerie Rogue", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/shm-8.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/shm-8-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/shm-8-v3.jpg"} },
   { id="c21-8", name="Horror", colors="B", pow="4", tou="4", types="Token Creature — Horror", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c21-8.jpg" },
   { id="mid-3", name="Bird", colors="U", pow="1", tou="1", types="Token Creature — Bird", text="Flying This creature can block only creatures with flying.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-3.jpg" },
@@ -750,7 +750,7 @@ local TOKENS = {
   { id="m10-8", name="Gargoyle", colors="c", pow="3", tou="4", types="Token Artifact Creature — Gargoyle", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m10-8.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m10-8-v2.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m10-8-v3.jpg", "https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m10-8-v4.jpg"} },
   { id="rvr-19", name="Voja", colors="GW", pow="2", tou="2", types="Token Legendary Creature — Wolf", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/rvr-19.jpg" },
   { id="msc-26", name="Ape Villain", colors="R", pow="3", tou="3", types="Token Creature — Ape Villain", text="Haste", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msc-26.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msc-26-v2.jpg"} },
-  { id="gs1-t1", name="Mowu // Mowu", colors="c", types="Token Legendary Creature — Dog // Token Legendary Creature — Dog", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gs1-t1.jpg" },
+  { id="gs1-t1", name="Mowu // Mowu", colors="c", types="Token Legendary Creature — Dog // Token Legendary Creature — Dog", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gs1-t1.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gs1-t1-back.jpg" },
   { id="uma-12", name="Spark Elemental", colors="R", pow="3", tou="1", types="Token Creature — Elemental", text="Trample, haste At the beginning of the end step, sacrifice Spark Elemental.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/uma-12.jpg" },
   { id="40k-15", name="Plaguebearer of Nurgle", colors="B", pow="1", tou="3", types="Token Creature — Demon", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/40k-15.jpg" },
   { id="c18-4", name="Mask", colors="W", types="Token Enchantment — Aura", text="Enchant permanent Totem armor (If enchanted permanent would be destroyed, instead remove all damage from it and destroy this Aura.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/c18-4.jpg" },
@@ -763,7 +763,7 @@ local TOKENS = {
   { id="afr-6", name="Skeleton", colors="B", pow="1", tou="1", types="Token Creature — Skeleton", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/afr-6.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/afr-6-v2.jpg"} },
   { id="rtr-12", name="Elemental", colors="GW", pow="8", tou="8", types="Token Creature — Elemental", text="Vigilance", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/rtr-12.jpg" },
   { id="who-11", name="Alien Angel", colors="B", pow="2", tou="2", types="Token Artifact Creature — Alien Angel", text="First strike, vigilance Whenever an opponent casts a creature spell, this permanent isn't a creature until end of turn.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-11.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/who-11-v2.jpg"} },
-  { id="q07-t12", name="Goblin // Blood", colors="c", types="Token Creature — Goblin // Token Artifact — Blood", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/q07-t12.jpg" },
+  { id="q07-t12", name="Goblin // Blood", colors="c", types="Token Creature — Goblin // Token Artifact — Blood", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/q07-t12.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/q07-t12-back.jpg" },
   { id="jou-1", name="Sphinx", colors="U", pow="4", tou="4", types="Token Creature — Sphinx", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/jou-1.jpg" },
   { id="arb-1", name="Bird Soldier", colors="W", pow="1", tou="1", types="Token Creature — Bird Soldier", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/arb-1.jpg" },
   { id="war-6", name="Assassin", colors="B", pow="1", tou="1", types="Token Creature — Assassin", text="Deathtouch Whenever this creature deals damage to a planeswalker, destroy that planeswalker.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/war-6.jpg" },
@@ -785,7 +785,7 @@ local TOKENS = {
   { id="neo-1", name="Pilot", colors="c", pow="1", tou="1", types="Token Creature — Pilot", text="This creature crews Vehicles as though its power were 2 greater.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/neo-1.jpg" },
   { id="eld-11", name="Human Cleric", colors="RW", pow="2", tou="1", types="Token Creature — Human Cleric", text="Lifelink, haste", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-11.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-11-v2.jpg"} },
   { id="fdn-24", name="Kaito, Cunning Infiltrator Emblem", colors="c", types="Emblem", text="Whenever a player casts a spell, you create a 2/1 blue Ninja creature token.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/fdn-24.jpg" },
-  { id="gk1-5", name="Saproling // Insect", colors="c", types="Token Creature — Saproling // Token Creature — Insect", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-5.jpg" },
+  { id="gk1-5", name="Saproling // Insect", colors="c", types="Token Creature — Saproling // Token Creature — Insect", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-5.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-5-back.jpg" },
   { id="cma-18", name="Drake", colors="GU", pow="2", tou="2", types="Token Creature — Drake", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cma-18.jpg" },
   { id="mh2-4", name="Timeless Dragon", colors="B", pow="4", tou="4", types="Token Creature — Zombie Dragon", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mh2-4.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mh2-4-v2.jpg"} },
   { id="hou-6", name="Resilient Khenra", colors="B", pow="4", tou="4", types="Token Creature — Zombie Jackal Wizard", text="When Resilient Khenra enters the battlefield, you may have target creature get +X/+X until end of turn, where X is Resilient Khenra's power.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/hou-6.jpg" },
@@ -828,7 +828,7 @@ local TOKENS = {
   { id="lci-3", name="Gnome Soldier", colors="W", pow="*", tou="*", types="Token Artifact Creature — Gnome Soldier", text="This creature's power and toughness are each equal to the number of artifacts and/or creatures you control.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/lci-3.jpg" },
   { id="akh-25", name="Gideon of the Trials Emblem", colors="c", types="Emblem — Gideon", text="As long as you control a Gideon planeswalker, you can't lose the game and your opponents can't win the game.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/akh-25.jpg" },
   { id="stx-9", name="Rowan, Scholar of Sparks Emblem", colors="c", types="Emblem", text="Whenever you cast an instant or sorcery spell, you may pay {2}. If you do, copy that spell. You may choose new targets for the copy.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/stx-9.jpg" },
-  { id="gk1-8", name="Saproling // Elf Knight", colors="c", types="Token Creature — Saproling // Token Creature — Elf Knight", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-8.jpg" },
+  { id="gk1-8", name="Saproling // Elf Knight", colors="c", types="Token Creature — Saproling // Token Creature — Elf Knight", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-8.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-8-back.jpg" },
   { id="rna-2", name="Illusion", colors="U", pow="0", tou="2", types="Token Creature — Illusion", text="Whenever this creature blocks a creature, that creature doesn't untap during its controller's next untap step.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/rna-2.jpg" },
   { id="pip-6", name="Alien", colors="U", pow="0", tou="0", types="Token Creature — Alien", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/pip-6.jpg" },
   { id="bfz-12", name="Gideon, Ally of Zendikar Emblem", colors="c", types="Emblem — Gideon", text="Creatures you control get +1/+1.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/bfz-12.jpg" },
@@ -839,15 +839,15 @@ local TOKENS = {
   { id="clb-8", name="Skeleton", colors="B", pow="4", tou="1", types="Token Creature — Skeleton", text="Menace (This creature can't be blocked except by two or more creatures.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-8.jpg" },
   { id="one-8", name="Drone", colors="c", pow="2", tou="2", types="Token Artifact Creature — Drone", text="Deathtouch When this creature leaves the battlefield, each opponent loses 2 life and you gain 2 life.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/one-8.jpg" },
   { id="cmm-67", name="Wall", colors="W", pow="0", tou="4", types="Token Creature — Wall", text="Defender, flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/cmm-67.jpg" },
-  { id="gk1-9", name="Wurm // Saproling", colors="c", types="Token Creature — Wurm // Token Creature — Saproling", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-9.jpg" },
+  { id="gk1-9", name="Wurm // Saproling", colors="c", types="Token Creature — Wurm // Token Creature — Saproling", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-9.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-9-back.jpg" },
   { id="m14-13", name="Garruk, Caller of Beasts Emblem", colors="c", types="Emblem — Garruk", text="Whenever you cast a creature spell, you may search your library for a creature card, put it onto the battlefield, then shuffle your library.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/m14-13.jpg" },
   { id="neo-12", name="Spirit", colors="G", pow="*", tou="*", types="Token Creature — Spirit", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/neo-12.jpg" },
-  { id="gk1-10", name="Elemental // Centaur", colors="c", types="Token Creature — Elemental // Token Creature — Centaur", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-10.jpg" },
+  { id="gk1-10", name="Elemental // Centaur", colors="c", types="Token Creature — Elemental // Token Creature — Centaur", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-10.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-10-back.jpg" },
   { id="mh3-6", name="Fox", colors="W", pow="2", tou="2", types="Token Creature — Fox", text="Vigilance", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mh3-6.jpg" },
   { id="mid-9", name="Insect", colors="G", pow="3", tou="3", types="Token Creature — Insect", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/mid-9.jpg" },
   { id="woc-12", name="Pirate", colors="R", pow="4", tou="2", types="Token Creature — Pirate", text="This creature can't block.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/woc-12.jpg" },
   { id="msh-10", name="The Void", colors="B", pow="5", tou="5", types="Token Legendary Creature — Horror Villain", text="Flying, indestructible The Void attacks each combat if able.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/msh-10.jpg" },
-  { id="l17-1", name="Gremlin // Energy Reserve", colors="c", types="Token Creature — Gremlin // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l17-1.jpg" },
+  { id="l17-1", name="Gremlin // Energy Reserve", colors="c", types="Token Creature — Gremlin // Card", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l17-1.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/l17-1-back.jpg" },
   { id="eld-19", name="Garruk, Cursed Huntsman Emblem", colors="c", types="Emblem", text="Creatures you control get +3/+3 and have trample.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/eld-19.jpg" },
   { id="clb-7", name="Demon", colors="B", pow="3", tou="3", types="Token Creature — Demon", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-7.jpg" },
   { id="moc-29", name="Butterfly", colors="G", pow="1", tou="1", types="Token Creature — Insect", text="Flying", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/moc-29.jpg" },
@@ -862,12 +862,12 @@ local TOKENS = {
   { id="otj-4", name="Sheep", colors="W", pow="1", tou="1", types="Token Creature — Sheep", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/otj-4.jpg" },
   { id="clb-39", name="Centaur", colors="G", pow="3", tou="3", types="Token Creature — Centaur", text="Protection from black", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/clb-39.jpg" },
   { id="otj-14", name="Varmint", colors="G", pow="2", tou="1", types="Token Creature — Varmint", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/otj-14.jpg" },
-  { id="unf-4", name="Contortionist // Contortionist", colors="c", types="Token Creature — Octopus Performer // Token Creature — Octopus Performer", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/unf-4.jpg" },
+  { id="unf-4", name="Contortionist // Contortionist", colors="c", types="Token Creature — Octopus Performer // Token Creature — Octopus Performer", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/unf-4.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/unf-4-back.jpg" },
   { id="fin-13", name="Horror", colors="B", pow="2", tou="2", types="Token Creature — Horror", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/fin-13.jpg" },
   { id="war-16", name="Citizen", colors="BGRUW", pow="2", tou="2", types="Token Creature — Citizen", text="This creature is all colors.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/war-16.jpg" },
   { id="neo-18", name="Kaito Shizuki Emblem", colors="c", types="Emblem", text="Whenever a creature you control deals combat damage to a player, search your library for a blue or black creature card, put it onto the battlefield, then shuffle.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/neo-18.jpg" },
   { id="isd-3", name="Homunculus", colors="U", pow="2", tou="2", types="Token Creature — Homunculus", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-3.jpg", variants={"https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/isd-3-v2.jpg"} },
-  { id="ust-1", name="Angel // Angel", colors="c", types="Token Creature — Angel // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-1.jpg" },
+  { id="ust-1", name="Angel // Angel", colors="c", types="Token Creature — Angel // Token", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-1.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/ust-1-back.jpg" },
   { id="blb-22", name="Rust-Shield Rampager", colors="G", pow="1", tou="1", types="Token Creature — Raccoon Warrior", text="This creature can't be blocked by creatures with power 2 or less. (This token's mana cost is {3}{G}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blb-22.jpg" },
   { id="fin-18", name="Frog", colors="G", pow="1", tou="1", types="Token Creature — Frog", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/fin-18.jpg" },
   { id="blc-10", name="Steelburr Champion", colors="W", pow="1", tou="1", types="Token Creature — Mouse Soldier", text="Vigilance Whenever an opponent casts a noncreature spell, put a +1/+1 counter on this creature. (This token's mana cost is {2}{W}.)", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/blc-10.jpg" },
@@ -909,7 +909,7 @@ local TOKENS = {
   { id="tla-3", name="Spirit", colors="c", pow="1", tou="1", types="Token Creature — Spirit", text="This token can't block or be blocked by non-Spirit creatures.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/tla-3.jpg" },
   { id="spm-2", name="Illusion Villain", colors="U", pow="3", tou="3", types="Token Creature — Illusion Villain", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/spm-2.jpg" },
   { id="neo-3", name="Samurai", colors="W", pow="2", tou="2", types="Token Creature — Samurai", text="Vigilance", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/neo-3.jpg" },
-  { id="gk1-6", name="Soldier // Goblin", colors="c", types="Token Creature — Soldier // Token Creature — Goblin", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-6.jpg" },
+  { id="gk1-6", name="Soldier // Goblin", colors="c", types="Token Creature — Soldier // Token Creature — Goblin", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-6.jpg", back="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/gk1-6-back.jpg" },
   { id="40k-6", name="Ultramarines Honour Guard", colors="W", pow="2", tou="2", types="Token Creature — Astartes Warrior", text="Other creatures you control get +1/+1.", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/40k-6.jpg" },
   { id="tmt-2", name="Dinosaur Soldier", colors="W", pow="2", tou="2", types="Token Creature — Dinosaur Soldier", text="", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/tmt-2.jpg" },
   { id="iko-8", name="Dinosaur", colors="R", pow="1", tou="1", types="Token Creature — Dinosaur", text="Haste", img="https://cdn.jsdelivr.net/gh/bradgravett/bitterblossom@main/token_images/iko-8.jpg" },
@@ -935,7 +935,6 @@ local TOKENS = {
 local filtered    = {}
 local page        = 0
 local uiReady     = false
-local injectTries = 0
 local panelOpen   = false
 
 local currentText = ""      -- live search box text
@@ -1065,7 +1064,12 @@ end
 
 ------------------------------------------------------------------- spawn --
 
-local function cardJSON(nickname, description, faceUrl)
+local function cardJSON(nickname, description, faceUrl, backUrl)
+  -- A real double-faced token passes its back face here: use it as the
+  -- BackURL and DON'T hide it (it's a game side you flip to, not hidden
+  -- info). Otherwise fall back to CARD_BACK, then the face itself.
+  local isDFC = backUrl ~= nil and backUrl ~= ""
+  local back = (isDFC and backUrl) or (CARD_BACK ~= "" and CARD_BACK) or faceUrl
   return {
     Name = "CardCustom",
     Transform = {
@@ -1078,22 +1082,24 @@ local function cardJSON(nickname, description, faceUrl)
     CustomDeck = {
       ["1"] = {
         FaceURL = faceUrl,
-        BackURL = (CARD_BACK ~= "" and CARD_BACK) or faceUrl,
+        BackURL = back,
         NumWidth = 1, NumHeight = 1,
-        BackIsHidden = true, UniqueBack = false, Type = 0,
+        BackIsHidden = not isDFC, UniqueBack = false, Type = 0,
       },
     },
   }
 end
 
-local function spawnPosFor(color)
-  local ok, t = pcall(function()
-    return Player[color] and Player[color].getHandTransform()
-  end)
-  if ok and t then
-    return t.position + t.forward * 8 + Vector(0, 2, 0)
-  end
-  return self.getPosition() + Vector(0, 3, 0)
+-- Spawn to the RIGHT of the tile, clear of the floating panel. Flip the
+-- sign of SPAWN_RIGHT if tokens land on the left; raise SPAWN_UP if they
+-- clip the table.
+local SPAWN_RIGHT = 6
+local SPAWN_UP    = 2
+
+local function spawnPos()
+  return self.getPosition()
+    + self.getTransformRight() * SPAWN_RIGHT
+    + Vector(0, SPAWN_UP, 0)
 end
 
 local function spawnToken(t, playerColor)
@@ -1103,11 +1109,11 @@ local function spawnToken(t, playerColor)
     return
   end
 
-  local data = cardJSON(t.name, descFor(t), t.img)
+  local data = cardJSON(t.name, descFor(t), t.img, t.back)
 
-  -- Alternate printings -> selectable object States. State 1 is the default
-  -- face (t.img, original art); each variant URL becomes states 2, 3, ...
-  -- Players switch printings via the state menu / number keys in TTS.
+  -- Alternate printings -> selectable object States (single-faced tokens
+  -- only; DFCs carry no variants, so this is skipped for them). State 1 is
+  -- the original art; each variant URL becomes states 2, 3, ...
   if t.variants and #t.variants > 0 then
     data.States = {}
     for i, url in ipairs(t.variants) do
@@ -1117,12 +1123,17 @@ local function spawnToken(t, playerColor)
 
   spawnObjectJSON({
     json = JSON.encode(data),
-    position = spawnPosFor(playerColor),
+    position = spawnPos(),
     rotation = { 0, 180, 0 },
   })
 
   local n = 1 + (t.variants and #t.variants or 0)
-  local extra = (n > 1) and ("  (" .. n .. " printings)") or ""
+  local extra = ""
+  if t.back and t.back ~= "" then
+    extra = "  (double-faced)"
+  elseif n > 1 then
+    extra = "  (" .. n .. " printings)"
+  end
   broadcastToColor("Spawned " .. t.name .. extra, playerColor, { 0.6, 1, 0.6 })
 end
 
@@ -1145,22 +1156,31 @@ local function renderPage()
   if page >= pages then page = pages - 1 end
   if page < 0 then page = 0 end
 
+  -- Rows are STATIC in the XML (setValue works on those; injected buttons
+  -- lose their text when active is toggled). Empty rows are blanked and
+  -- made transparent rather than deactivated.
+  local ROW_ON  = "#333333|#4a4a4a|#262626|#333333"
+  local ROW_OFF = "#00000000|#00000000|#00000000|#00000000"
   local base = page * PAGE_SIZE
   for i = 1, PAGE_SIZE do
-    local id = "row" .. i
+    local btn = "row" .. i        -- click target (Button)
+    local txt = "row" .. i .. "txt"  -- label (Text overlay); setValue targets this
     local t = filtered[base + i]
     if t then
-      self.UI.setValue(id, rowLabel(t))
-      self.UI.setAttribute(id, "textColor",
+      self.UI.setValue(txt, rowLabel(t))
+      self.UI.setAttribute(txt, "color",
         (t.img == "" and "#888888") or "#ffffff")
-      self.UI.setAttribute(id, "active", true)
+      self.UI.setAttribute(btn, "colors", ROW_ON)
     else
-      self.UI.setAttribute(id, "active", false)
+      self.UI.setValue(txt, "")
+      self.UI.setAttribute(btn, "colors", ROW_OFF)
     end
   end
 
   self.UI.setAttribute("prevBtn", "active", tostring(page > 0))
+  self.UI.setAttribute("prevBtn", "textColor", "#ffffff")
   self.UI.setAttribute("nextBtn", "active", tostring(page < pages - 1))
+  self.UI.setAttribute("nextBtn", "textColor", "#ffffff")
 
   local msg
   if total == 0 then
@@ -1189,66 +1209,17 @@ local function applyFilters()
   renderPage()
 end
 
+-- Full 4-state colour blocks. Single `color` lets TTS derive the pressed
+-- tint by darkening, which reads near-black on a dark base.
+local FILTER_ON  = "#5B21B6|#6d34d6|#4a1a9c|#5B21B6"
+local FILTER_OFF = "#333344|#404058|#2a2a38|#333344"
+
 local function updateFilterButtons()
   for _, fid in ipairs(FILTER_IDS) do
     local on = (FILTER_CAT[fid] == activeCat)
-    self.UI.setAttribute(fid, "color", on and "#5B21B6" or "#333344")
+    self.UI.setAttribute(fid, "colors", on and FILTER_ON or FILTER_OFF)
+    self.UI.setAttribute(fid, "textColor", "#ffffff")
   end
-end
-
-local function findById(nodes, id)
-  for _, n in ipairs(nodes or {}) do
-    if n.attributes and n.attributes.id == id then return n end
-    local hit = findById(n.children, id)
-    if hit then return hit end
-  end
-  return nil
-end
-
-local injectRows
-injectRows = function()
-  local xml = self.UI.getXmlTable()
-  local panel = xml and findById(xml, "tokenPanel")
-  if not panel then
-    injectTries = injectTries + 1
-    if injectTries > 20 then
-      print("[TokenSpawner] gave up: no #tokenPanel in object UI XML")
-      return
-    end
-    Wait.time(injectRows, 0.5)
-    return
-  end
-
-  panel.children = panel.children or {}
-  for i = 1, PAGE_SIZE do
-    local yOff = ROW_Y0 - (i - 1) * ROW_STEP
-    panel.children[#panel.children + 1] = {
-      tag = "Button",
-      attributes = {
-        id = "row" .. i,
-        active = false,
-        onClick = "onResultClick",
-        rectAlignment = "UpperCenter",
-        offsetXY = "0 " .. yOff,
-        width = 326, height = ROW_H,
-        fontSize = 13,
-        alignment = "MiddleLeft",
-        colors = "#333333|#4a4a4a|#262626|#333333",
-        textColor = "#ffffff",
-      },
-      value = "",
-    }
-  end
-
-  self.UI.setXmlTable(xml)
-  print("[TokenSpawner] injected " .. PAGE_SIZE .. " row slots, "
-    .. #TOKENS .. " tokens loaded")
-
-  Wait.time(function()
-    uiReady = true
-    updateFilterButtons()
-    applyFilters()
-  end, 0.3)
 end
 
 ------------------------------------------------------------ ui callbacks --
@@ -1298,5 +1269,10 @@ end
 function onLoad()
   buildIndex()
   registerIcons()
-  injectRows()
+  -- Let the pasted XML UI finish parsing, then populate the static rows.
+  Wait.time(function()
+    uiReady = true
+    updateFilterButtons()
+    applyFilters()
+  end, 0.3)
 end
