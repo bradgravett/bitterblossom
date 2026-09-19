@@ -47,42 +47,8 @@
           offsetXY="135 -50" width="60" height="30" fontSize="13"
           colors="#333344|#404058|#2a2a38|#333344" textColor="#ffffff">Helper</Button>
 
-  <!-- Quick-spawn row (6 icon buttons). Button takes the click; the Image
-       overlay (raycast off) draws the icon on top. Icons are registered
-       as custom UI assets by the Lua side (registerIcons). -->
-  <Button id="qs_treasure" onClick="onQuickSpawn" rectAlignment="UpperCenter"
-          offsetXY="-135 -86" width="52" height="32"
-          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
-  <Image id="qsi_treasure" image="ic_treasure" raycastTarget="false" preserveAspect="true"
-         rectAlignment="UpperCenter" offsetXY="-135 -86" width="42" height="28" />
-  <Button id="qs_monarch" onClick="onQuickSpawn" rectAlignment="UpperCenter"
-          offsetXY="-81 -86" width="52" height="32"
-          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
-  <Image id="qsi_monarch" image="ic_monarch" raycastTarget="false" preserveAspect="true"
-         rectAlignment="UpperCenter" offsetXY="-81 -86" width="42" height="28" />
-  <Button id="qs_clue" onClick="onQuickSpawn" rectAlignment="UpperCenter"
-          offsetXY="-27 -86" width="52" height="32"
-          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
-  <Image id="qsi_clue" image="ic_clue" raycastTarget="false" preserveAspect="true"
-         rectAlignment="UpperCenter" offsetXY="-27 -86" width="42" height="28" />
-  <Button id="qs_food" onClick="onQuickSpawn" rectAlignment="UpperCenter"
-          offsetXY="27 -86" width="52" height="32"
-          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
-  <Image id="qsi_food" image="ic_food" raycastTarget="false" preserveAspect="true"
-         rectAlignment="UpperCenter" offsetXY="27 -86" width="42" height="28" />
-  <Button id="qs_map" onClick="onQuickSpawn" rectAlignment="UpperCenter"
-          offsetXY="81 -86" width="52" height="32"
-          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
-  <Image id="qsi_map" image="ic_map" raycastTarget="false" preserveAspect="true"
-         rectAlignment="UpperCenter" offsetXY="81 -86" width="42" height="28" />
-  <Button id="qs_blood" onClick="onQuickSpawn" rectAlignment="UpperCenter"
-          offsetXY="135 -86" width="52" height="32"
-          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
-  <Image id="qsi_blood" image="ic_blood" raycastTarget="false" preserveAspect="true"
-         rectAlignment="UpperCenter" offsetXY="135 -86" width="42" height="28" />
-
-  <Text id="status"
-        rectAlignment="UpperCenter" offsetXY="0 -122"
+<Text id="status"
+        rectAlignment="UpperCenter" offsetXY="0 -86"
         width="330" height="18" fontSize="12"
         color="#bbbbbb" alignment="MiddleLeft">Loading…</Text>
 
@@ -91,52 +57,52 @@
        Button label. row{i}txt is the label; row{i} is the click target.
        row count == PAGE_SIZE; offsets follow ROW_Y0 -150 / ROW_STEP 44. -->
   <Button id="row1" onClick="onResultClick" rectAlignment="UpperCenter"
-          offsetXY="0 -150" width="326" height="42"
+          offsetXY="0 -114" width="326" height="42"
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row1txt" raycastTarget="false" rectAlignment="UpperCenter"
-        offsetXY="0 -150" width="310" height="42" fontSize="13"
+        offsetXY="0 -114" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
   <Button id="row2" onClick="onResultClick" rectAlignment="UpperCenter"
-          offsetXY="0 -194" width="326" height="42"
+          offsetXY="0 -158" width="326" height="42"
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row2txt" raycastTarget="false" rectAlignment="UpperCenter"
-        offsetXY="0 -194" width="310" height="42" fontSize="13"
+        offsetXY="0 -158" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
   <Button id="row3" onClick="onResultClick" rectAlignment="UpperCenter"
-          offsetXY="0 -238" width="326" height="42"
+          offsetXY="0 -202" width="326" height="42"
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row3txt" raycastTarget="false" rectAlignment="UpperCenter"
-        offsetXY="0 -238" width="310" height="42" fontSize="13"
+        offsetXY="0 -202" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
   <Button id="row4" onClick="onResultClick" rectAlignment="UpperCenter"
-          offsetXY="0 -282" width="326" height="42"
+          offsetXY="0 -246" width="326" height="42"
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row4txt" raycastTarget="false" rectAlignment="UpperCenter"
-        offsetXY="0 -282" width="310" height="42" fontSize="13"
+        offsetXY="0 -246" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
   <Button id="row5" onClick="onResultClick" rectAlignment="UpperCenter"
-          offsetXY="0 -326" width="326" height="42"
+          offsetXY="0 -290" width="326" height="42"
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row5txt" raycastTarget="false" rectAlignment="UpperCenter"
-        offsetXY="0 -326" width="310" height="42" fontSize="13"
+        offsetXY="0 -290" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
   <Button id="row6" onClick="onResultClick" rectAlignment="UpperCenter"
-          offsetXY="0 -370" width="326" height="42"
+          offsetXY="0 -334" width="326" height="42"
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row6txt" raycastTarget="false" rectAlignment="UpperCenter"
-        offsetXY="0 -370" width="310" height="42" fontSize="13"
+        offsetXY="0 -334" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
   <Button id="row7" onClick="onResultClick" rectAlignment="UpperCenter"
-          offsetXY="0 -414" width="326" height="42"
+          offsetXY="0 -378" width="326" height="42"
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row7txt" raycastTarget="false" rectAlignment="UpperCenter"
-        offsetXY="0 -414" width="310" height="42" fontSize="13"
+        offsetXY="0 -378" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
   <Button id="row8" onClick="onResultClick" rectAlignment="UpperCenter"
-          offsetXY="0 -458" width="326" height="42"
+          offsetXY="0 -422" width="326" height="42"
           colors="#333333|#4a4a4a|#262626|#333333"></Button>
   <Text id="row8txt" raycastTarget="false" rectAlignment="UpperCenter"
-        offsetXY="0 -458" width="310" height="42" fontSize="13"
+        offsetXY="0 -422" width="310" height="42" fontSize="13"
         alignment="MiddleLeft" color="#ffffff"></Text>
 
   <Button id="prevBtn" onClick="onPrevPage"
@@ -149,3 +115,45 @@
           colors="#333344|#404058|#2a2a38|#333344" textColor="#ffffff">Next ►</Button>
 
 </Panel>
+
+<!-- Quick-spawn panel: floats above the tile, independent of the search
+     panel. Position/rotation are Brad-tunable; rotation matches tokenPanel
+     so text/icons sit upright on the tile. active="true" = always shown. -->
+<Panel id="quickPanel" active="false"
+       position="0 -140 -5" rotation="0 0 180" scale="1 1 1"
+       width="350" height="64" color="#1b1b1bF2">
+  <!-- Quick-spawn row (6 icon buttons). Button takes the click; the Image
+       overlay (raycast off) draws the icon on top. Icons are registered
+       as custom UI assets by the Lua side (registerIcons). -->
+  <Button id="qs_treasure" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="-135 -7" width="52" height="48"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_treasure" image="ic_treasure" raycastTarget="false" preserveAspect="true"
+         rectAlignment="MiddleCenter" offsetXY="-135 2" width="42" height="28" />
+  <Button id="qs_monarch" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="-81 -7" width="52" height="48"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_monarch" image="ic_monarch" raycastTarget="false" preserveAspect="true"
+         rectAlignment="MiddleCenter" offsetXY="-81 2" width="42" height="28" />
+  <Button id="qs_clue" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="-27 -7" width="52" height="48"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_clue" image="ic_clue" raycastTarget="false" preserveAspect="true"
+         rectAlignment="MiddleCenter" offsetXY="-27 2" width="42" height="28" />
+  <Button id="qs_food" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="27 -7" width="52" height="48"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_food" image="ic_food" raycastTarget="false" preserveAspect="true"
+         rectAlignment="MiddleCenter" offsetXY="27 2" width="42" height="28" />
+  <Button id="qs_map" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="81 -7" width="52" height="48"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_map" image="ic_map" raycastTarget="false" preserveAspect="true"
+         rectAlignment="MiddleCenter" offsetXY="81 2" width="42" height="28" />
+  <Button id="qs_blood" onClick="onQuickSpawn" rectAlignment="UpperCenter"
+          offsetXY="135 -5" width="52" height="48"
+          colors="#2a2a2a|#454545|#1a1a1a|#2a2a2a" textColor="#2a2a2a"></Button>
+  <Image id="qsi_blood" image="ic_blood" raycastTarget="false" preserveAspect="true"
+         rectAlignment="MiddleCenter" offsetXY="135 2" width="42" height="28" />
+
+  </Panel>

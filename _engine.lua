@@ -298,6 +298,7 @@ end
 function onTogglePanel()
   panelOpen = not panelOpen
   self.UI.setAttribute("tokenPanel", "active", tostring(panelOpen))
+  self.UI.setAttribute("quickPanel", "active", tostring(panelOpen))
 end
 
 function onSearchInput(player, value, id)

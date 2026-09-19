@@ -142,20 +142,48 @@ def stage_csv():
     for c in iter_cards(cfg.INPUT_JSONL):
         if node_str(c, "lang") != "en":
             continue
-        if node_str(c, "layout") not in cfg.TOKEN_LAYOUTS:
+        # Layout gate. Dungeons are real single-faced cards (layout "normal",
+        # type "Dungeon"), not tokens, so admit anything whose type line
+        # contains "Dungeon" regardless of layout; everything else must be a
+        # token-like layout.
+        _tl = node_str(c, "type_line") \
+            + " " + node_str(c, "card_faces", 0, "type_line") \
+            + " " + node_str(c, "card_faces", 1, "type_line")
+        if "Dungeon" not in _tl \
+                and node_str(c, "layout") not in cfg.TOKEN_LAYOUTS:
             continue
 
-        type_line = node_str(c, "type_line")
         name = node_str(c, "name")
+        top_type = node_str(c, "type_line")
+
+        # Faces. For double-faced tokens each face has its own image + type
+        # line; the top-level type_line often reflects only the front, so we
+        # build a combined type line from BOTH faces for categorising and
+        # searching (e.g. a creature-front / dungeon-back token must still
+        # count as a dungeon).
+        f0_img  = node_str(c, "image_uris", "normal") \
+            or node_str(c, "card_faces", 0, "image_uris", "normal")
+        f1_img  = node_str(c, "card_faces", 1, "image_uris", "normal")
+        f0_type = node_str(c, "card_faces", 0, "type_line") or top_type
+        f1_type = node_str(c, "card_faces", 1, "type_line")
+
+        if f1_img:
+            # Double-faced. Default face = the Dungeon side when one exists
+            # (front otherwise); the other face becomes the flip side.
+            if "Dungeon" in f1_type and "Dungeon" not in f0_type:
+                image, back = f1_img, f0_img
+                type_line = f1_type + " // " + f0_type
+            else:
+                image, back = f0_img, f1_img
+                type_line = (f0_type + " // " + f1_type) if f1_type else f0_type
+        else:
+            image, back = f0_img, ""
+            type_line = top_type
+
         keep = any(m in type_line for m in cfg.TYPE_MARKERS) \
             or name in cfg.NAME_ALLOWLIST
         if not keep:
             continue
-
-        # Front face, and (for double-faced tokens) the distinct back face.
-        image = node_str(c, "image_uris", "normal") \
-            or node_str(c, "card_faces", 0, "image_uris", "normal")
-        back = node_str(c, "card_faces", 1, "image_uris", "normal")
         if not image:
             continue
 
